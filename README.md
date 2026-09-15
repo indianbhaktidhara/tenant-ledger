@@ -9,26 +9,16 @@ This repository is pre-configured with **GitHub Actions** (`.github/workflows/de
 ### How to Publish to GitHub in 3 Easy Steps:
 
 1. **Push to your GitHub account**:
-   - In Google AI Studio, click the **three dots menu (⋮)** or **Settings** icon at the top right and choose **"Push to GitHub"** (or export as ZIP and push with `git`).
-   - If using Git command line:
-     ```bash
-     git init
-     git add .
-     git commit -m "Initial commit of Tenant Ledger"
-     git branch -M main
-     git remote add origin https://github.com/<YOUR-USERNAME>/<YOUR-REPO-NAME>.git
-     git push -u origin main
-     ```
+   - Repository: `https://github.com/indianbhaktidhara/tenant-ledger`
 
 2. **Enable GitHub Pages in your Repository Settings**:
-   - Go to your repository on GitHub (`https://github.com/<YOUR-USERNAME>/<YOUR-REPO-NAME>`).
-   - Click **Settings** (tab at the top) → **Pages** (in the left sidebar).
+   - Go to: `https://github.com/indianbhaktidhara/tenant-ledger/settings/pages`
    - Under **Build and deployment** > **Source**, select **GitHub Actions**.
 
 3. **Get Your Free Live URL**:
    - GitHub Actions will automatically run the build workflow.
-   - Within 1–2 minutes, your live URL will appear at:
-     **`https://<YOUR-USERNAME>.github.io/<YOUR-REPO-NAME>/`**
+   - Your live public URL will be:
+     **`https://indianbhaktidhara.github.io/tenant-ledger/`**
    - Share this URL with any user. Anyone can open it in their browser and install it on their phone!
 
 ---
