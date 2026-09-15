@@ -203,7 +203,7 @@ export default function App() {
   };
 
   const handleResetData = () => {
-    if (confirm('Reset all ledger entries to original default values for Vedprakash, Beena, Narmadeshwar, Neeraj, and Anita?')) {
+    if (confirm('Reset all ledger data to zero for Narmadeshwar Mishra, Vedprakash, Beena, Anita, and Neeraj?')) {
       const init = createInitialState();
       setState(init);
       saveAppState(init);
@@ -556,7 +556,7 @@ export default function App() {
               onClick={handleResetData}
               className="hover:underline text-[var(--danger)] flex items-center gap-1"
             >
-              <RotateCcw size={12} /> Reset to Sample Data
+              <RotateCcw size={12} /> Reset All to Zero
             </button>
           </div>
           <p className="text-[11px] leading-relaxed text-[var(--ink-muted)] max-w-md mx-auto">

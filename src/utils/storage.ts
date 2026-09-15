@@ -1,22 +1,35 @@
 import { AppState, Tenant } from '../types';
 import { monthKey, TENANT_COLORS } from './ledgerCalculations';
 
-const STORAGE_KEY = 'tenant_ledger_state_v1';
+const STORAGE_KEY = 'tenant_ledger_state_v2';
 
 export function createInitialState(): AppState {
   const initialTenants: Tenant[] = [
+    {
+      id: 't_narmadeshwar',
+      name: 'Narmadeshwar Mishra',
+      color: TENANT_COLORS[2],
+      phone: '+91 98765 43212',
+      unit: 'Flat 201',
+      fixedRent: 4000,
+      elecRate: 7,
+      openingRent: 0,
+      openingElec: 0,
+      openingMisc: 0,
+      initialReading: 0
+    },
     {
       id: 't_vedprakash',
       name: 'Vedprakash',
       color: TENANT_COLORS[0],
       phone: '+91 98765 43210',
       unit: 'Flat 101',
-      fixedRent: 8500,
-      elecRate: 9,
+      fixedRent: 3300,
+      elecRate: 7,
       openingRent: 0,
       openingElec: 0,
       openingMisc: 0,
-      initialReading: 1240
+      initialReading: 0
     },
     {
       id: 't_beena',
@@ -24,38 +37,12 @@ export function createInitialState(): AppState {
       color: TENANT_COLORS[1],
       phone: '+91 98765 43211',
       unit: 'Flat 102',
-      fixedRent: 7500,
-      elecRate: 9,
-      openingRent: 500, // sample previous pending rent
-      openingElec: 120,
-      openingMisc: 0,
-      initialReading: 980
-    },
-    {
-      id: 't_narmadeshwar',
-      name: 'Narmadeshwar',
-      color: TENANT_COLORS[2],
-      phone: '+91 98765 43212',
-      unit: 'Flat 201',
-      fixedRent: 11000,
-      elecRate: 9,
+      fixedRent: 3300,
+      elecRate: 7,
       openingRent: 0,
       openingElec: 0,
       openingMisc: 0,
-      initialReading: 2150
-    },
-    {
-      id: 't_neeraj',
-      name: 'Neeraj',
-      color: TENANT_COLORS[3],
-      phone: '+91 98765 43213',
-      unit: 'Flat 202',
-      fixedRent: 9000,
-      elecRate: 9,
-      openingRent: -1000, // sample advance
-      openingElec: 0,
-      openingMisc: 0,
-      initialReading: 1530
+      initialReading: 0
     },
     {
       id: 't_anita',
@@ -63,134 +50,33 @@ export function createInitialState(): AppState {
       color: TENANT_COLORS[4],
       phone: '+91 98765 43214',
       unit: 'Flat 301',
-      fixedRent: 8000,
-      elecRate: 9,
+      fixedRent: 2000,
+      elecRate: 7,
       openingRent: 0,
       openingElec: 0,
       openingMisc: 0,
-      initialReading: 890
+      initialReading: 0
+    },
+    {
+      id: 't_neeraj',
+      name: 'Neeraj',
+      color: TENANT_COLORS[3],
+      phone: '+91 98765 43213',
+      unit: 'Flat 202',
+      fixedRent: 6000,
+      elecRate: 7,
+      openingRent: 0,
+      openingElec: 0,
+      openingMisc: 0,
+      initialReading: 0
     }
   ];
 
-  const now = new Date();
-  const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  const currentMk = monthKey(now);
-  const prevMk = monthKey(prevDate);
-
-  const entries: AppState['entries'] = {
-    // Previous month sample
-    [`t_vedprakash:${prevMk}`]: {
-      month: prevMk,
-      rent: 8500,
-      paid: 8500,
-      paymentDate: `${prevMk}-05`,
-      paymentMode: 'UPI',
-      note: 'Paid on time'
-    },
-    [`t_beena:${prevMk}`]: {
-      month: prevMk,
-      rent: 7500,
-      paid: 7000,
-      paymentDate: `${prevMk}-07`,
-      paymentMode: 'Cash',
-      note: 'Part payment ₹7,000'
-    },
-    // Current month sample
-    [`t_vedprakash:${currentMk}`]: {
-      month: currentMk,
-      rent: 8500,
-      paid: 8500,
-      paymentDate: `${currentMk}-04`,
-      paymentMode: 'UPI',
-      note: 'GPay receipt #9821'
-    },
-    [`t_beena:${currentMk}`]: {
-      month: currentMk,
-      rent: 7500,
-      paid: 0,
-      note: 'Reminder sent on 5th'
-    },
-    [`t_narmadeshwar:${currentMk}`]: {
-      month: currentMk,
-      rent: 11000,
-      paid: 11000,
-      paymentDate: `${currentMk}-03`,
-      paymentMode: 'Bank Transfer',
-      note: 'NEFT credit'
-    },
-    [`t_neeraj:${currentMk}`]: {
-      month: currentMk,
-      rent: 9000,
-      paid: 8000,
-      paymentDate: `${currentMk}-05`,
-      paymentMode: 'UPI',
-      note: 'Adjusted with ₹1000 advance'
-    },
-    [`t_anita:${currentMk}`]: {
-      month: currentMk,
-      rent: 8000,
-      paid: 8000,
-      paymentDate: `${currentMk}-02`,
-      paymentMode: 'UPI',
-      note: 'Full settlement'
-    }
-  };
-
-  const elecEntries: AppState['elecEntries'] = {
-    [`t_vedprakash:${prevMk}`]: {
-      month: prevMk,
-      reading: 1330,
-      amount: 810, // (1330 - 1240) = 90 units * 9
-      received: 810,
-      note: 'Paid with rent'
-    },
-    [`t_vedprakash:${currentMk}`]: {
-      month: currentMk,
-      reading: 1425,
-      amount: 855, // (1425 - 1330) = 95 units * 9
-      received: 855,
-      note: 'September meter reading'
-    },
-    [`t_beena:${currentMk}`]: {
-      month: currentMk,
-      reading: 1060,
-      amount: 720, // (1060 - 980) = 80 units * 9
-      received: 0,
-      note: 'Due with rent'
-    },
-    [`t_narmadeshwar:${currentMk}`]: {
-      month: currentMk,
-      reading: 2265,
-      amount: 1035, // 115 units * 9
-      received: 1035,
-      note: 'Cleared via UPI'
-    }
-  };
-
-  const miscEntries: AppState['miscEntries'] = {
-    [`t_vedprakash:${currentMk}`]: {
-      month: currentMk,
-      items: [
-        { id: 'm1', label: 'Bathroom Tap Repair', amount: 350, category: 'repair' }
-      ],
-      received: 350,
-      note: 'Plumber bill reimbursed'
-    },
-    [`t_narmadeshwar:${currentMk}`]: {
-      month: currentMk,
-      items: [
-        { id: 'm2', label: 'Building Maintenance & Garbage', amount: 500, category: 'maintenance' }
-      ],
-      received: 500,
-      note: 'Monthly society charge'
-    }
-  };
-
   return {
     tenants: initialTenants,
-    entries,
-    elecEntries,
-    miscEntries
+    entries: {},
+    elecEntries: {},
+    miscEntries: {}
   };
 }
 
