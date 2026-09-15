@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #F5F1E8;
+  --paper-subtle: #EFE9DD;
+  --card: #FFFFFF;
+  --ink: #22281F;
+  --ink-soft: #5B6156;
+  --ink-muted: #848B7F;
+  --rule: #D9CFB4;
+  --rule-soft: #E7E0CC;
+  --brass: #A9752B;
+  --brass-bg: #F6ECD9;
+  --brass-dark: #84571A;
+  --teal: #2E5F55;
+  --teal-bg: #E8F0EC;
+  --teal-dark: #1F453D;
+  --danger: #A13D2E;
+  --danger-bg: #F7E7E2;
+  --volt: #3D6EA1;
+  --volt-bg: #E5EEF5;
+  --volt-dark: #2B527B;
+  --plum: #6B4F8C;
+  --plum-bg: #EEE8F3;
+  --plum-dark: #50386C;
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif-slab {
+  font-family: 'Zilla Slab', Georgia, serif;
+}
+
+.font-mono-plex {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Custom scrollbar for clean ledger strip */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-soft);
+}

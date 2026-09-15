@@ -1,0 +1,6 @@
+{
+  "name": "Tenant Ledger",
+  "description": "PWA-enabled tenant ledger for rent, electricity, and miscellaneous expenses with offline support, opening balances, and CSV reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
