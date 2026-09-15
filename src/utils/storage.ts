@@ -58,8 +58,8 @@ export function createInitialState(): AppState {
       initialReading: 1530
     },
     {
-      id: 't_banita',
-      name: 'Banita',
+      id: 't_anita',
+      name: 'Anita',
       color: TENANT_COLORS[4],
       phone: '+91 98765 43214',
       unit: 'Flat 301',
@@ -126,7 +126,7 @@ export function createInitialState(): AppState {
       paymentMode: 'UPI',
       note: 'Adjusted with ₹1000 advance'
     },
-    [`t_banita:${currentMk}`]: {
+    [`t_anita:${currentMk}`]: {
       month: currentMk,
       rent: 8000,
       paid: 8000,
@@ -208,8 +208,44 @@ export function loadAppState(): AppState {
       saveAppState(init);
       return init;
     }
-    // Normalize properties
+    // Normalize properties and auto-migrate Banita -> Anita
+    let needsSave = false;
     parsed.tenants.forEach((t: Tenant) => {
+      if (t.name === 'Banita') {
+        t.name = 'Anita';
+        needsSave = true;
+      }
+      if (t.id === 't_banita') {
+        t.id = 't_anita';
+        needsSave = true;
+        if (parsed.entries) {
+          Object.keys(parsed.entries).forEach((key) => {
+            if (key.startsWith('t_banita:')) {
+              const newKey = key.replace('t_banita:', 't_anita:');
+              parsed.entries[newKey] = parsed.entries[key];
+              delete parsed.entries[key];
+            }
+          });
+        }
+        if (parsed.elecEntries) {
+          Object.keys(parsed.elecEntries).forEach((key) => {
+            if (key.startsWith('t_banita:')) {
+              const newKey = key.replace('t_banita:', 't_anita:');
+              parsed.elecEntries[newKey] = parsed.elecEntries[key];
+              delete parsed.elecEntries[key];
+            }
+          });
+        }
+        if (parsed.miscEntries) {
+          Object.keys(parsed.miscEntries).forEach((key) => {
+            if (key.startsWith('t_banita:')) {
+              const newKey = key.replace('t_banita:', 't_anita:');
+              parsed.miscEntries[newKey] = parsed.miscEntries[key];
+              delete parsed.miscEntries[key];
+            }
+          });
+        }
+      }
       t.fixedRent = Number(t.fixedRent) || 0;
       t.elecRate = Number(t.elecRate) || 0;
       t.openingRent = Number(t.openingRent) || 0;
@@ -220,6 +256,9 @@ export function loadAppState(): AppState {
     if (!parsed.entries) parsed.entries = {};
     if (!parsed.elecEntries) parsed.elecEntries = {};
     if (!parsed.miscEntries) parsed.miscEntries = {};
+    if (needsSave) {
+      saveAppState(parsed);
+    }
     return parsed;
   } catch (err) {
     console.error('Error loading state from localStorage:', err);

@@ -203,7 +203,7 @@ export default function App() {
   };
 
   const handleResetData = () => {
-    if (confirm('Reset all ledger entries to original default values for Vedprakash, Beena, Narmadeshwar, Neeraj, and Banita?')) {
+    if (confirm('Reset all ledger entries to original default values for Vedprakash, Beena, Narmadeshwar, Neeraj, and Anita?')) {
       const init = createInitialState();
       setState(init);
       saveAppState(init);
