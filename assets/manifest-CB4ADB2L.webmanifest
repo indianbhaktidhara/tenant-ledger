@@ -1,0 +1,61 @@
+{
+  "name": "Tenant Ledger — Rent & Utilities",
+  "short_name": "TenantLedger",
+  "description": "Tenant ledger for rent, electricity, and miscellaneous expenses with opening balances and CSV exports.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf9f4",
+  "theme_color": "#1b1e23",
+  "categories": ["finance", "business", "utilities"],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Opening Balances",
+      "short_name": "Opening",
+      "description": "Quick view of tenant opening balances",
+      "url": "./?action=opening",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Electricity Ledger",
+      "short_name": "Electricity",
+      "description": "Log meter readings and compute units",
+      "url": "./?action=elec",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Closing Ledger",
+      "short_name": "Closing",
+      "description": "View net dues across all tenants",
+      "url": "./?action=closing",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
