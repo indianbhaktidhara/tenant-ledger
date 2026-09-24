@@ -108,11 +108,14 @@ export function computeElecLedger(state: AppState, tenantId: string): ComputedEl
   let running = openingSeed;
   return entries.map((entry, index) => {
     const units = Math.max(0, entry.reading - prevReading);
+    const rate = tenant?.elecRate ?? 7;
+    const calculatedAmount = entry.amount !== 0 ? entry.amount : Math.round(units * rate);
     const opening = running;
-    running = opening + entry.amount - entry.received;
+    running = opening + calculatedAmount - entry.received;
     const isOverdue = index === entries.length - 1 && entry.month < currentMk && running > 0;
     const result: ComputedElecRow = {
       ...entry,
+      amount: calculatedAmount,
       prevReading,
       units,
       opening,

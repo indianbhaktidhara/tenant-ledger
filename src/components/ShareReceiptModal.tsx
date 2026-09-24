@@ -65,10 +65,11 @@ Statement Period: ${formatMonthLabel(activeMonth)}
 • Closing Rent Balance: ${formatCurrency(rentBal)}
 
 *2. Electricity Ledger:*
-• Units: ${elecUnits} units @ ₹${tenant.elecRate}/unit
-• Bill: ${formatCurrency(elecDue)}
-• Paid: ${formatCurrency(elecPaid)}
-• Closing Elec Balance: ${formatCurrency(elecBal)}
+• Meter Reading: Last ${curElec?.prevReading ?? 0} ➔ Current ${curElec?.reading ?? 0}
+• Consumed Units: ${elecUnits} units (${curElec?.reading ?? 0} − ${curElec?.prevReading ?? 0})
+• Amount: ${elecUnits} units × ₹${tenant.elecRate || 7}/unit = ${formatCurrency(elecDue)}
+• Amount Recd: ${formatCurrency(elecPaid)}
+• Amount Bal: ${formatCurrency(elecBal)}
 
 *3. Miscellaneous Expenses:*
 ${miscItems.length > 0 ? miscItems.map((it) => `• ${it.label}: ${formatCurrency(it.amount)}`).join('\n') : '• None'}
@@ -142,16 +143,22 @@ Generated via Tenant Ledger`;
             {/* Electricity Section */}
             <div className="space-y-1 pt-2 border-t border-dashed border-[var(--rule-soft)]">
               <div className="font-bold text-[var(--volt-dark)] flex justify-between">
-                <span>2. Electricity ({elecUnits} units)</span>
+                <span>2. Electricity ({elecUnits} units @ ₹{tenant.elecRate || 7}/unit)</span>
                 <span>{formatCurrency(elecDue)}</span>
               </div>
+              {curElec && (
+                <div className="text-[10px] text-[var(--ink-muted)] flex justify-between font-mono-plex">
+                  <span>Meter: {curElec.prevReading} ➔ {curElec.reading}</span>
+                  <span>{curElec.reading} − {curElec.prevReading} = {elecUnits} units</span>
+                </div>
+              )}
               <div className="text-[var(--ink-soft)] flex justify-between text-[11px]">
-                <span>Less Paid / Received</span>
-                <span className="text-[var(--teal)]">-{formatCurrency(elecPaid)}</span>
+                <span>Less Amount Recd (Paid)</span>
+                <span className="text-[var(--teal)] font-mono-plex">-{formatCurrency(elecPaid)}</span>
               </div>
               <div className="flex justify-between font-semibold pt-0.5 border-t border-[var(--rule-soft)]">
-                <span>Elec Closing Balance</span>
-                <span>{formatCurrency(elecBal)}</span>
+                <span>Amount Bal (Elec)</span>
+                <span className="font-mono-plex">{formatCurrency(elecBal)}</span>
               </div>
             </div>
 

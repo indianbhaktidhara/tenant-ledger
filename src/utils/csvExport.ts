@@ -70,14 +70,14 @@ export function exportRentLedgerCSV(tenant: Tenant, rows: ComputedRentRow[]) {
 export function exportElecLedgerCSV(tenant: Tenant, rows: ComputedElecRow[]) {
   const headers = [
     'Month',
-    'Opening Balance (₹)',
-    'Previous Reading',
-    'Current Reading',
-    'Units Consumed',
-    'Rate/Unit (₹)',
-    'Electricity Bill (₹)',
-    'Paid / Received (₹)',
-    'Closing Balance (₹)',
+    'Opening Last Reading',
+    'Current Meter Reading',
+    'Consumed Units',
+    'Rate (₹/Unit)',
+    'Amount (Units x Rate) (₹)',
+    'Opening Bal (₹)',
+    'Amount Recd (₹)',
+    'Amount Bal (₹)',
     'Status',
     'Notes'
   ];
@@ -85,9 +85,9 @@ export function exportElecLedgerCSV(tenant: Tenant, rows: ComputedElecRow[]) {
   const lines = [
     `"Tenant Name: ${tenant.name}"`,
     `"Report: Electricity Ledger"`,
-    `"Default Unit Rate: ₹${tenant.elecRate || 0}"`,
+    `"Electricity Unit Rate: ₹${tenant.elecRate || 7}/unit"`,
+    `"Initial Baseline Reading: ${tenant.initialReading || 0} units"`,
     `"Initial Opening Elec Balance: ₹${tenant.openingElec || 0}"`,
-    `"Initial Meter Reading: ${tenant.initialReading || 0}"`,
     `"Generated On: ${new Date().toLocaleDateString('en-IN')}"`,
     '',
     headers.map(escapeCSV).join(',')
@@ -96,12 +96,12 @@ export function exportElecLedgerCSV(tenant: Tenant, rows: ComputedElecRow[]) {
   rows.forEach((row) => {
     lines.push([
       escapeCSV(formatMonthLabel(row.month)),
-      escapeCSV(row.opening),
       escapeCSV(row.prevReading),
       escapeCSV(row.reading),
       escapeCSV(row.units),
-      escapeCSV(tenant.elecRate || '-'),
+      escapeCSV(tenant.elecRate || 7),
       escapeCSV(row.amount),
+      escapeCSV(row.opening),
       escapeCSV(row.received),
       escapeCSV(row.balanceAfter),
       escapeCSV(row.status.toUpperCase()),
